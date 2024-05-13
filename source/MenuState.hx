@@ -16,7 +16,7 @@ class MenuState extends FlxState
 		super.create();
 		FlxG.cameras.bgColor = 0xffaaaaaa;
 
-		selectText = new FlxText(15, FlxG.height - 20, 0, curTextofSelect, 18, false);
+		selectText = new FlxText(15, FlxG.height - 40, 0, curTextofSelect, 18, false);
 		selectText.setFormat(null, 18, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
 		add(selectText);
 	}
