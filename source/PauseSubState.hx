@@ -20,9 +20,9 @@ class PauseSubState extends FlxSubState
 	{
 		super();
 		var bg:FlxSprite = new FlxSprite();
-		bg.screenCenter();
 		bg.makeGraphic(FlxG.width * 100, FlxG.height * 100, FlxColor.BLACK);
 		bg.alpha = 0.6;
+		bg.scrollFactor.set();
 		add(bg);
 		selectText = new FlxText(15, FlxG.height - 40, 0, curTextofSelect, 18, false);
 		selectText.setFormat(null, 18, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);

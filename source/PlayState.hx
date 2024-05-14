@@ -9,6 +9,7 @@ import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 import hscript.Interp;
 import hscript.Parser;
 import lime.utils.Assets;
@@ -68,7 +69,8 @@ class PlayState extends FlxState
 		add(_coins);
 
 		// Create _player
-		_player = new FlxSprite(FlxG.width / 2 - 5);
+		_player = new FlxSprite(Std.parseFloat(loadstringFile("assets/id/lev" + levelID + "/playerX.txt")),
+			Std.parseFloat(loadstringFile("assets/id/lev" + levelID + "/playerY.txt")));
 		trace(_player.x);
 		trace(_player.y);
 		_player.loadGraphic("assets/images/player.png", false, 8, 8);
@@ -77,7 +79,7 @@ class PlayState extends FlxState
 		_player.drag.x = _player.maxVelocity.x * 4;
 		add(_player);
 
-		_scoreText = new FlxText(2, 2, 80, "SCORE: " + (_coins.countDead() * 100));
+		_scoreText = new FlxText(2, 2, 80, "SCORE: 0");
 		_scoreText.setFormat(null, 8, FlxColor.WHITE, null, NONE, FlxColor.BLACK);
 		add(_scoreText);
 
@@ -99,13 +101,13 @@ class PlayState extends FlxState
 		if (FlxG.keys.anyPressed([LEFT, A]))
 		{
 			_player.flipX = true;
-			_player.acceleration.x = -_player.maxVelocity.x * 4;
+			_player.acceleration.x = -_player.maxVelocity.x * 2;
 		}
 
 		if (FlxG.keys.anyPressed([RIGHT, D]))
 		{
 			_player.flipX = false;
-			_player.acceleration.x = _player.maxVelocity.x * 4;
+			_player.acceleration.x = _player.maxVelocity.x * 2;
 		}
 
 		if (FlxG.keys.anyJustPressed([SPACE, UP, W]) && _player.isTouching(FLOOR))
@@ -150,6 +152,10 @@ class PlayState extends FlxState
 		_status.text = "Yay, you won!";
 		_scoreText.text = "SCORE: " + (_coins.countDead() * 100);
 		_player.kill();
+		new FlxTimer().start(3, function(timer:FlxTimer)
+		{
+			FlxG.switchState(new SelectLevelState());
+		});
 	}
 
 	function getCoin(Coin:FlxObject, Player:FlxObject):Void

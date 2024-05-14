@@ -59,7 +59,7 @@ class MenuState extends FlxState
 			{
 				case 0:
 					trace("move to select level");
-					FlxG.switchState(new PlayState());
+					FlxG.switchState(new SelectLevelState());
 				case 1:
 					trace("open config level");
 				case 2:
