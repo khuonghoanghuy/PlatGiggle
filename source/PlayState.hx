@@ -160,6 +160,7 @@ class PlayState extends FlxState
 
 	function getCoin(Coin:FlxObject, Player:FlxObject):Void
 	{
+		FlxG.sound.play("assets/sounds/coins.wav", 1);
 		Coin.kill();
 		_scoreText.text = "SCORE: " + (_coins.countDead() * 100);
 

@@ -16,6 +16,7 @@ class SelectLevelState extends FlxState
 
 	// how much thing
 	var howMuch:Int = 3;
+	var maxMuch:Int = 0;
 	var howLeftFor:Int = 2;
 
 	function loadstringFile(file:String)
@@ -29,6 +30,7 @@ class SelectLevelState extends FlxState
 		super.create();
 
 		howMuch = Std.parseInt(loadstringFile("assets/id/countLevel.txt"));
+		maxMuch = Std.parseInt(loadstringFile("assets/id/countLevel.txt"));
 		FlxG.cameras.bgColor = 0xffaaaaaa;
 
 		selectText = new FlxText(15, FlxG.height - 40, 0, curTextofSelect, 18, false);
@@ -54,9 +56,9 @@ class SelectLevelState extends FlxState
 		if (FlxG.keys.justPressed.LEFT)
 		{
 			trace(curIntSelctText);
-			curIntSelctText = (curIntSelctText - 1) % howMuch;
-			if (curIntSelctText < 1)
-				curIntSelctText = howMuch;
+			curIntSelctText = (curIntSelctText - 1 + howMuch) % howMuch;
+			if (curIntSelctText == 0)
+				curIntSelctText = maxMuch;
 		}
 
 		if (FlxG.keys.justPressed.RIGHT)

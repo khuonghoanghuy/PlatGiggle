@@ -11,5 +11,4 @@ createCoin(17, 8);
 createCoin(19, 8);
 createCoin(21, 17);
 createCoin(33, 19);
-
 setExitPOS(35, 27);

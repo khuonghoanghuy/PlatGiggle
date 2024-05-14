@@ -1,15 +1,6 @@
-createCoin(2, 26);
-createCoin(1, 28);
-createCoin(23, 25);
-createCoin(10, 28);
-createCoin(15, 28);
-createCoin(15, 14);
-createCoin(27, 28);
-createCoin(6, 3);
-createCoin(15, 8);
-createCoin(17, 8);
-createCoin(19, 8);
-createCoin(21, 17);
-createCoin(33, 19);
+createCoin(5, 5);
+createCoin(13, 5);
+createCoin(10, 15);
+createCoin(27, 15);
 
-setExitPOS(35, 27);
+setExitPOS(30, 25);
