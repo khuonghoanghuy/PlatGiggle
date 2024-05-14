@@ -38,7 +38,6 @@ class PlayState extends FlxState
 
 	override public function create():Void
 	{
-		FlxG.mouse.visible = false;
 		FlxG.cameras.bgColor = 0xffaaaaaa;
 
 		_level = new FlxTilemap();
@@ -58,12 +57,20 @@ class PlayState extends FlxState
 		interp.variables.set("setExitPOS", function (x:Int, y:Int) {
 			_exit.setPosition(x * 8 + 1, y * 8);
 		});
+		interp.variables.set("setPlayerPOS", function(x:Float, y:Float)
+		{
+			_player.x = x;
+			_player.y = y;
+		});
+		interp.variables.set("FlxG", FlxG);
 		var parser = new Parser();
 		interp.execute(parser.parseString(loadstringFile("assets/id/lev"+levelID+"/coin.txt")));
 		add(_coins);
 
 		// Create _player
 		_player = new FlxSprite(FlxG.width / 2 - 5);
+		trace(_player.x);
+		trace(_player.y);
 		_player.loadGraphic("assets/images/player.png", false, 8, 8);
 		_player.maxVelocity.set(80, 200);
 		_player.acceleration.y = 200;
@@ -91,17 +98,24 @@ class PlayState extends FlxState
 
 		if (FlxG.keys.anyPressed([LEFT, A]))
 		{
+			_player.flipX = true;
 			_player.acceleration.x = -_player.maxVelocity.x * 4;
 		}
 
 		if (FlxG.keys.anyPressed([RIGHT, D]))
 		{
+			_player.flipX = false;
 			_player.acceleration.x = _player.maxVelocity.x * 4;
 		}
 
 		if (FlxG.keys.anyJustPressed([SPACE, UP, W]) && _player.isTouching(FLOOR))
 		{
 			_player.velocity.y = -_player.maxVelocity.y / 2;
+		}
+
+		if (FlxG.keys.justPressed.ESCAPE)
+		{
+			openSubState(new PauseSubState());
 		}
 
 		super.update(elapsed);
