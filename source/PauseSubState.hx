@@ -39,21 +39,23 @@ class PauseSubState extends FlxSubState
 			case 0:
 				curTextofSelect = "Resume";
 			case 1:
+				curTextofSelect = "Restart";
+			case 2:
 				curTextofSelect = "Return To Main Menu";
 		}
 
 		if (FlxG.keys.justPressed.LEFT)
 		{
 			trace(curIntSelctText);
-			curIntSelctText = (curIntSelctText - 1) % 2;
+			curIntSelctText = (curIntSelctText - 1) % 3;
 			if (curIntSelctText < 0)
-				curIntSelctText = 1;
+				curIntSelctText = 2;
 		}
 
 		if (FlxG.keys.justPressed.RIGHT)
 		{
 			trace(curIntSelctText);
-			curIntSelctText = (curIntSelctText + 1) % 2;
+			curIntSelctText = (curIntSelctText + 1) % 3;
 		}
 
 		if (FlxG.keys.justPressed.ENTER)
@@ -64,6 +66,10 @@ class PauseSubState extends FlxSubState
 					trace("resume thing");
 					close();
 				case 1:
+					trace("restart level");
+					close();
+					FlxG.resetState();
+				case 2:
 					trace("return to main menu");
 					FlxG.switchState(new MenuState());
 			}

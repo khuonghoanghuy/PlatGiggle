@@ -152,10 +152,7 @@ class PlayState extends FlxState
 		_status.text = "Yay, you won!";
 		_scoreText.text = "SCORE: " + (_coins.countDead() * 100);
 		_player.kill();
-		new FlxTimer().start(3, function(timer:FlxTimer)
-		{
-			FlxG.switchState(new SelectLevelState());
-		});
+		openSubState(new WinSubState());
 	}
 
 	function getCoin(Coin:FlxObject, Player:FlxObject):Void

@@ -17,6 +17,7 @@ class MenuState extends FlxState
 	override function create()
 	{
 		super.create();
+		SaveData.init();
 		FlxG.cameras.bgColor = 0xffaaaaaa;
 
 		selectText = new FlxText(15, FlxG.height - 40, 0, curTextofSelect, 18, false);
@@ -62,6 +63,7 @@ class MenuState extends FlxState
 					FlxG.switchState(new SelectLevelState());
 				case 1:
 					trace("open config level");
+					openSubState(new OptionsSubState());
 				case 2:
 					trace("exit game");
 					openSubState(new ExitSubState());
