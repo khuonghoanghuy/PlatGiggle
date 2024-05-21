@@ -1,0 +1,1 @@
+createCoin(3, 20);

@@ -46,6 +46,11 @@ class SelectLevelState extends FlxState
 		selectText.text = curTextofSelect;
 		curTextofSelect = "Level Select: " + Std.string(curIntSelctText);
 
+		if (FlxG.keys.justPressed.ESCAPE)
+		{
+			FlxG.switchState(new MenuState());
+		}
+
 		if (FlxG.keys.justPressed.ENTER)
 		{
 			trace("level select: " + curIntSelctText);

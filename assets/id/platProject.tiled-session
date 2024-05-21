@@ -1,0 +1,54 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "lev1/project.tmx",
+    "expandedProjectPaths": [
+        "lev1"
+    ],
+    "fileStates": {
+        "graphic.tsx": {
+            "scaleInDock": 23,
+            "scaleInEditor": 1
+        },
+        "lev1/data.tmx": {
+            "scale": 5.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 79,
+                "y": 259
+            }
+        },
+        "lev1/project.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 140.33333333333334,
+                "y": 78.33333333333331
+            }
+        }
+    },
+    "last.exportedFilePath": "C:/Users/HoangHuy/Desktop/Haxe Project/PlatGiggle/assets/id/lev1",
+    "last.imagePath": "C:/Users/HoangHuy/Desktop/Haxe Project/PlatGiggle/assets/id/graphic",
+    "map.height": 30,
+    "map.lastUsedExportFilter": "CSV files (*.csv)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 8,
+    "map.tileWidth": 8,
+    "map.width": 40,
+    "openFiles": [
+        "lev1/project.tmx"
+    ],
+    "project": "platProject.tiled-project",
+    "recentFiles": [
+        "lev1/project.tmx",
+        "graphic.tsx",
+        "lev1/data.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 8,
+        "width": 8
+    }
+}

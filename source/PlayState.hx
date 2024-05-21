@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -9,110 +10,118 @@ import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
-import flixel.util.FlxTimer;
 import hscript.Interp;
 import hscript.Parser;
 import lime.utils.Assets;
 
 using StringTools;
 
-/**
- * @author Zaphod
- */
 class PlayState extends FlxState
 {
-	static var _justDied:Bool = false;
-
-	var _level:FlxTilemap;
-	var _player:FlxSprite;
-	var _exit:FlxSprite;
-	var _scoreText:FlxText;
-	var _status:FlxText;
-	var _coins:FlxGroup;
-
 	public static var levelID:Int = 1;
+	
+	// gui
+	var player:FlxSprite;
+	var exit:FlxSprite;
 
-	function loadstringFile(file:String) {
+	// hud
+	var levelTM:FlxTilemap;
+	var scoreTxt:FlxText;
+	var coins:FlxGroup;
+
+	function loadstringFile(file:String):String
+	{
 		var da:String = Assets.getText(file).trim();
 		return da;
 	}
 
-	override public function create():Void
+	// cam hud
+	public static var camHUD:FlxCamera;
+
+	override function create()
 	{
-		FlxG.cameras.bgColor = 0xffaaaaaa;
+		FlxG.cameras.bgColor = Std.parseInt(loadstringFile("assets/id/lev" + levelID + "/colorbg.txt"));
+		// FlxG.cameras.bgColor = FlxColor.GRAY;
+		
+		super.create();
 
-		_level = new FlxTilemap();
-		_level.loadMapFromCSV("assets/id/lev" + levelID + "/data.csv", FlxGraphic.fromClass(GraphicAuto), 0, 0, AUTO);
-		add(_level);
+		camHUD = new FlxCamera();
+		camHUD.bgColor.alpha = 0;
+		FlxG.cameras.add(camHUD, false);
+		
+		levelTM = new FlxTilemap();
+		levelTM.loadMapFromCSV("assets/id/lev" + levelID + "/data.csv",
+			FlxGraphic.fromBitmapData(openfl.Assets.getBitmapData("assets/id/graphic/graphic.png")), 0, 0);
+		add(levelTM);
 
-		// Create the _level _exit
-		_exit = new FlxSprite(35 * 8 + 1, 25 * 8);
-		_exit.makeGraphic(14, 16, FlxColor.GREEN);
-		_exit.exists = false;
-		add(_exit);
+		player = new FlxSprite(Std.parseFloat(loadstringFile("assets/id/lev" + levelID + "/playerX.txt")),
+			Std.parseFloat(loadstringFile("assets/id/lev" + levelID + "/playerY.txt")));
+		trace(player.x);
+		trace(player.y);
+		player.loadGraphic("assets/images/player.png", false, 8, 8);
+		player.maxVelocity.set(80, 200);
+		player.acceleration.y = 200;
+		player.drag.x = player.maxVelocity.x * 4;
+		// FlxG.camera.follow(player, LOCKON, 1);
+		// FlxG.camera.zoom = 1.5;
+		add(player);
 
-		// Create _coins to collect (see createCoin() function below for more info)
-		_coins = new FlxGroup();
+		coins = new FlxGroup();
 		var interp = new Interp();
 		interp.variables.set("createCoin", createCoin);
 		interp.variables.set("setExitPOS", function (x:Int, y:Int) {
-			_exit.setPosition(x * 8 + 1, y * 8);
+			exit.setPosition(x * 8 + 1, y * 8);
 		});
 		interp.variables.set("setPlayerPOS", function(x:Float, y:Float)
 		{
-			_player.x = x;
-			_player.y = y;
+			player.x = x;
+			player.y = y;
 		});
 		interp.variables.set("FlxG", FlxG);
 		var parser = new Parser();
-		interp.execute(parser.parseString(loadstringFile("assets/id/lev"+levelID+"/coin.txt")));
-		add(_coins);
+		interp.execute(parser.parseString(loadstringFile("assets/id/lev" + levelID + "/data.txt")));
+		add(coins);
 
-		// Create _player
-		_player = new FlxSprite(Std.parseFloat(loadstringFile("assets/id/lev" + levelID + "/playerX.txt")),
-			Std.parseFloat(loadstringFile("assets/id/lev" + levelID + "/playerY.txt")));
-		trace(_player.x);
-		trace(_player.y);
-		_player.loadGraphic("assets/images/player.png", false, 8, 8);
-		_player.maxVelocity.set(80, 200);
-		_player.acceleration.y = 200;
-		_player.drag.x = _player.maxVelocity.x * 4;
-		add(_player);
+		exit = new FlxSprite(35 * 8 + 1, 25 * 8);
+		exit.makeGraphic(14, 16, FlxColor.GREEN);
+		exit.exists = false;
+		add(exit);
 
-		_scoreText = new FlxText(2, 2, 80, "SCORE: 0");
-		_scoreText.setFormat(null, 8, FlxColor.WHITE, null, NONE, FlxColor.BLACK);
-		add(_scoreText);
+		scoreTxt = new FlxText(2, 2, 80, "SCORE: 0");
+		scoreTxt.setFormat(null, 8, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
+		scoreTxt.cameras = [camHUD];
+		add(scoreTxt);
+	}    
 
-		_status = new FlxText(FlxG.width - 160 - 2, 2, 160, "Collect coins.");
-		_status.setFormat(null, 8, FlxColor.WHITE, RIGHT, NONE, FlxColor.BLACK);
-
-		if (_justDied)
-		{
-			_status.text = "Aww, you died!";
-		}
-
-		add(_status);
+	/**
+	 * Creates a new coin located on the specified tile
+	 */
+	function createCoin(X:Int, Y:Int):Void
+	{
+		var coin:FlxSprite = new FlxSprite(X * 8 + 3, Y * 8 + 2);
+		coin.makeGraphic(2, 4, 0xffffff00);
+		coins.add(coin);
 	}
 
-	override public function update(elapsed:Float):Void
+	override function update(elapsed:Float)
 	{
-		_player.acceleration.x = 0;
+		player.acceleration.x = 0;
 
 		if (FlxG.keys.anyPressed([LEFT, A]))
 		{
-			_player.flipX = true;
-			_player.acceleration.x = -_player.maxVelocity.x * 2;
+			player.flipX = true;
+			player.acceleration.x = -player.maxVelocity.x * 2;
 		}
 
 		if (FlxG.keys.anyPressed([RIGHT, D]))
 		{
-			_player.flipX = false;
-			_player.acceleration.x = _player.maxVelocity.x * 2;
+			player.flipX = false;
+			player.acceleration.x = player.maxVelocity.x * 2;
 		}
 
-		if (FlxG.keys.anyJustPressed([SPACE, UP, W]) && _player.isTouching(FLOOR))
+		if (FlxG.keys.anyJustPressed([SPACE, UP, W]) && player.isTouching(FLOOR))
 		{
-			_player.velocity.y = -_player.maxVelocity.y / 2;
+			player.velocity.y = -player.maxVelocity.y / 2;
 		}
 
 		if (FlxG.keys.justPressed.ESCAPE)
@@ -122,49 +131,27 @@ class PlayState extends FlxState
 
 		super.update(elapsed);
 
-		FlxG.overlap(_coins, _player, getCoin);
-		FlxG.collide(_level, _player);
-		FlxG.overlap(_exit, _player, win);
-	
-		if (FlxG.keys.justPressed.F4) {
-			FlxG.resetState();
-		}
-
-		if (_player.y > FlxG.height)
-		{
-			_justDied = true;
-			FlxG.resetState();
-		}
-	}
-
-	/**
-	 * Creates a new coin located on the specified tile
-	 */
-	function createCoin(X:Int, Y:Int):Void
-	{
-		var coin:FlxSprite = new FlxSprite(X * 8 + 3, Y * 8 + 2);
-		coin.makeGraphic(2, 4, 0xffffff00);
-		_coins.add(coin);
+		FlxG.overlap(coins, player, getCoin);
+		FlxG.collide(levelTM, player);
+		FlxG.overlap(exit, player, win);
 	}
 
 	function win(Exit:FlxObject, Player:FlxObject):Void
 	{
-		_status.text = "Yay, you won!";
-		_scoreText.text = "SCORE: " + (_coins.countDead() * 100);
-		_player.kill();
-		openSubState(new WinSubState());
+		scoreTxt.text = "SCORE: " + (coins.countDead() * 100);
+		player.kill();
+		// openSubState(new WinSubState());
 	}
 
 	function getCoin(Coin:FlxObject, Player:FlxObject):Void
 	{
 		FlxG.sound.play("assets/sounds/coins.wav", 1);
 		Coin.kill();
-		_scoreText.text = "SCORE: " + (_coins.countDead() * 100);
+		scoreTxt.text = "SCORE: " + (coins.countDead() * 100);
 
-		if (_coins.countLiving() == 0)
+		if (coins.countLiving() == 0)
 		{
-			_status.text = "Find the exit";
-			_exit.exists = true;
+			exit.exists = true;
 		}
 	}
 }

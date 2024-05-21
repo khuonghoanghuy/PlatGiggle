@@ -6,7 +6,6 @@ class SaveData
 {
 	public static function init()
 	{
-		FlxG.save.bind("platGiggleData", "huy1234th");
 		if (FlxG.save.data.leftKey == null)
 		{
 			FlxG.save.data.leftKey = "LEFT";
@@ -26,6 +25,7 @@ class SaveData
 		{
 			FlxG.save.data.rightKey = "RIGHT";
 		}
+		FlxG.save.bind("platGiggleData", "huy1234th");
 		FlxG.save.flush();
 	}
 }

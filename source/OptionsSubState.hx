@@ -5,7 +5,6 @@ import flixel.FlxSprite;
 import flixel.FlxSubState;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
-import flixel.util.FlxSave;
 
 class OptionsSubState extends FlxSubState
 {
@@ -14,10 +13,14 @@ class OptionsSubState extends FlxSubState
 	var curIntSelctText:Int = 0;
 	var curSaveToSee:String = "";
 	var curControlsChange:Bool = false;
+	var text:FlxText;
 
 	public function new()
 	{
 		super();
+		var titleText:FlxText = new FlxText(2, 2, 0, "OPTIONS", 8);
+		titleText.scrollFactor.set();
+		add(titleText);
 		var bg:FlxSprite = new FlxSprite();
 		bg.makeGraphic(FlxG.width * 100, FlxG.height * 100, FlxColor.BLACK);
 		bg.alpha = 0.6;
@@ -26,6 +29,9 @@ class OptionsSubState extends FlxSubState
 		selectText = new FlxText(15, FlxG.height - 40, 0, curTextofSelect, 18, false);
 		selectText.setFormat(null, 18, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
 		add(selectText);
+		text = new FlxText(0, 0, 0, "", 18);
+		text.screenCenter();
+		add(text);
 	}
 
 	override function update(elapsed:Float)
@@ -49,7 +55,7 @@ class OptionsSubState extends FlxSubState
 				curSaveToSee = FlxG.save.data.rightKey;
 		}
 
-		if (FlxG.keys.justPressed.LEFT)
+		if (FlxG.keys.justPressed.LEFT && !curControlsChange)
 		{
 			trace(curIntSelctText);
 			curIntSelctText = (curIntSelctText - 1) % 4;
@@ -57,13 +63,13 @@ class OptionsSubState extends FlxSubState
 				curIntSelctText = 3;
 		}
 
-		if (FlxG.keys.justPressed.RIGHT)
+		if (FlxG.keys.justPressed.RIGHT && !curControlsChange)
 		{
 			trace(curIntSelctText);
 			curIntSelctText = (curIntSelctText + 1) % 4;
 		}
 
-		if (FlxG.keys.justReleased.ESCAPE)
+		if (FlxG.keys.justReleased.ESCAPE && !curControlsChange)
 		{
 			FlxG.save.flush();
 			close();
@@ -72,23 +78,31 @@ class OptionsSubState extends FlxSubState
 		if (FlxG.keys.justPressed.ENTER)
 		{
 			curControlsChange = true;
-			if (curControlsChange)
+			trace("curControlsChange: " + curControlsChange);
+		}
+
+		if (curControlsChange)
+		{
+			text.text = "Press a Key to Apply";
+			if (!FlxG.keys.justPressed.ENTER && FlxG.keys.justPressed.ANY)
 			{
 				switch (curIntSelctText)
 				{
 					case 0:
 						FlxG.save.data.leftKey = FlxG.keys.getIsDown()[0].ID.toString();
-						curControlsChange = false;
+						trace("change to " + FlxG.save.data.leftKey);
 					case 1:
 						FlxG.save.data.downKey = FlxG.keys.getIsDown()[0].ID.toString();
-						curControlsChange = false;
+						trace("change to " + FlxG.save.data.downKey);
 					case 2:
 						FlxG.save.data.upKey = FlxG.keys.getIsDown()[0].ID.toString();
-						curControlsChange = false;
+						trace("change to " + FlxG.save.data.upKey);
 					case 3:
 						FlxG.save.data.rightKey = FlxG.keys.getIsDown()[0].ID.toString();
-						curControlsChange = false;
+						trace("change to " + FlxG.save.data.rightKey);
 				}
+				text.text = "";
+				curControlsChange = false;
 			}
 		}
 	}

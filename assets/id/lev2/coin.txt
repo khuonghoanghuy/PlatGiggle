@@ -1,6 +1,0 @@
-createCoin(5, 5);
-createCoin(13, 5);
-createCoin(10, 15);
-createCoin(27, 15);
-
-setExitPOS(30, 25);

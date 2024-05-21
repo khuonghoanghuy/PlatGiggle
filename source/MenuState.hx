@@ -1,7 +1,5 @@
 package;
 
-import feathers.controls.Alert;
-import feathers.data.ButtonBarItemState;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.text.FlxText;
@@ -12,7 +10,6 @@ class MenuState extends FlxState
 	var selectText:FlxText;
 	var curTextofSelect:String = "";
 	var curIntSelctText:Int = 0;
-	var buttonThing:ButtonBarItemState;
 
 	override function create()
 	{
@@ -66,7 +63,7 @@ class MenuState extends FlxState
 					openSubState(new OptionsSubState());
 				case 2:
 					trace("exit game");
-					openSubState(new ExitSubState());
+					Sys.exit(0);
 			}
 		}
 	}

@@ -1,8 +1,5 @@
 package;
 
-import feathers.controls.Alert;
-import feathers.controls.Button;
-import feathers.events.TriggerEvent;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
@@ -26,6 +23,8 @@ class PauseSubState extends FlxSubState
 		add(bg);
 		selectText = new FlxText(15, FlxG.height - 40, 0, curTextofSelect, 18, false);
 		selectText.setFormat(null, 18, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
+		selectText.scrollFactor.set();
+		selectText.cameras = [PlayState.camHUD];
 		add(selectText);
 	}
 
