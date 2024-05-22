@@ -62,7 +62,7 @@ class GameplaySubState extends FlxSubState
 			switch (curIntSelctText)
 			{
 				case 0:
-					FlxG.save.data.lowStage = (FlxG.save.data.lowStage ? true : false);
+					FlxG.save.data.lowStage = !FlxG.save.data.lowStage;
 			}
 		}
 	}

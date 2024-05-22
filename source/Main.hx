@@ -12,7 +12,5 @@ class Main extends Sprite
 		super();
 		addChild(new FlxGame(320, 240, MenuState));
 		addChild(new FPS(5, 5, 0xffffff));
-		FlxG.mouse.visible = true;
-		FlxG.mouse.useSystemCursor = true;
 	}
 }
