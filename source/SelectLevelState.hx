@@ -69,7 +69,7 @@ class SelectLevelState extends FlxState
 		if (FlxG.keys.justPressed.RIGHT)
 		{
 			trace(curIntSelctText);
-			curIntSelctText = (curIntSelctText + 1) % howMuch;
+			curIntSelctText = (curIntSelctText + 1) % (howMuch + 1);
 			if (curIntSelctText == 0)
 				curIntSelctText = 1;
 		}
