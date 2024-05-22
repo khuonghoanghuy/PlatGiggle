@@ -87,7 +87,7 @@ class PlayState extends FlxState
 		exit.exists = false;
 		add(exit);
 
-		scoreTxt = new FlxText(2, 2, 80, "SCORE: 0");
+		scoreTxt = new FlxText(2, 2, 80, "SCORE: 0\nLEVEL: " + levelID);
 		scoreTxt.setFormat(null, 8, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
 		scoreTxt.cameras = [camHUD];
 		add(scoreTxt);
@@ -138,7 +138,7 @@ class PlayState extends FlxState
 
 	function win(Exit:FlxObject, Player:FlxObject):Void
 	{
-		scoreTxt.text = "SCORE: " + (coins.countDead() * 100);
+		scoreTxt.text = "SCORE: " + (coins.countDead() * 100) + "\nLEVEL: " + levelID;
 		player.kill();
 		// openSubState(new WinSubState());
 	}
@@ -147,7 +147,7 @@ class PlayState extends FlxState
 	{
 		FlxG.sound.play("assets/sounds/coins.wav", 1);
 		Coin.kill();
-		scoreTxt.text = "SCORE: " + (coins.countDead() * 100);
+		scoreTxt.text = "SCORE: " + (coins.countDead() * 100) + "\nLEVEL: " + levelID;
 
 		if (coins.countLiving() == 0)
 		{

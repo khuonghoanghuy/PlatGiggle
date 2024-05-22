@@ -29,9 +29,10 @@ class OptionsSubState extends FlxSubState
 		selectText = new FlxText(15, FlxG.height - 40, 0, curTextofSelect, 18, false);
 		selectText.setFormat(null, 18, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
 		add(selectText);
-		text = new FlxText(0, 0, 0, "", 18);
+		text = new FlxText(0, 0, 0, "Press a Key to Apply", 18);
 		text.screenCenter();
 		add(text);
+		text.text = "";
 	}
 
 	override function update(elapsed:Float)
