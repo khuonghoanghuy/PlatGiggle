@@ -1,17 +1,20 @@
-package;
+package options;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
-import lime.app.Application;
 
-class PauseSubState extends FlxSubState
+class OptionsSubState extends FlxSubState
 {
 	var selectText:FlxText;
 	var curTextofSelect:String = "";
 	var curIntSelctText:Int = 0;
+	var curSaveToSee:String = "";
+	var text:FlxText;
+
+	public static var titleText:FlxText;
 
 	public function new()
 	{
@@ -19,13 +22,13 @@ class PauseSubState extends FlxSubState
 		var bg:FlxSprite = new FlxSprite();
 		bg.makeGraphic(FlxG.width * 100, FlxG.height * 100, FlxColor.BLACK);
 		bg.alpha = 0.6;
-		bg.cameras = [PlayState.camHUD];
 		bg.scrollFactor.set();
 		add(bg);
+		titleText = new FlxText(2, 2, 0, "OPTIONS - MENU", 8);
+		titleText.scrollFactor.set();
+		add(titleText);
 		selectText = new FlxText(15, FlxG.height - 40, 0, curTextofSelect, 18, false);
 		selectText.setFormat(null, 18, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
-		selectText.scrollFactor.set();
-		selectText.cameras = [PlayState.camHUD];
 		add(selectText);
 	}
 
@@ -37,25 +40,29 @@ class PauseSubState extends FlxSubState
 		switch (curIntSelctText)
 		{
 			case 0:
-				curTextofSelect = "Resume";
+				curTextofSelect = "Control";
 			case 1:
-				curTextofSelect = "Restart";
-			case 2:
-				curTextofSelect = "Return To Main Menu";
+				curTextofSelect = "Gameplay";
 		}
 
 		if (FlxG.keys.justPressed.LEFT)
 		{
 			trace(curIntSelctText);
-			curIntSelctText = (curIntSelctText - 1) % 3;
+			curIntSelctText = (curIntSelctText - 1) % 2;
 			if (curIntSelctText < 0)
-				curIntSelctText = 2;
+				curIntSelctText = 1;
 		}
 
 		if (FlxG.keys.justPressed.RIGHT)
 		{
 			trace(curIntSelctText);
-			curIntSelctText = (curIntSelctText + 1) % 3;
+			curIntSelctText = (curIntSelctText + 1) % 2;
+		}
+
+		if (FlxG.keys.justReleased.ESCAPE)
+		{
+			FlxG.save.flush();
+			close();
 		}
 
 		if (FlxG.keys.justPressed.ENTER)
@@ -63,15 +70,13 @@ class PauseSubState extends FlxSubState
 			switch (curIntSelctText)
 			{
 				case 0:
-					trace("resume thing");
-					close();
+					// close();
+					curTextofSelect = "";
+					openSubState(new ControlsSubState());
 				case 1:
-					trace("restart level");
-					close();
-					FlxG.resetState();
-				case 2:
-					trace("return to main menu");
-					FlxG.switchState(new MenuState());
+					// close();
+					curTextofSelect = "";
+					openSubState(new GameplaySubState());
 			}
 		}
 	}

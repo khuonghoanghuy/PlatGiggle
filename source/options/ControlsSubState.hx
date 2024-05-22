@@ -1,4 +1,4 @@
-package;
+package options;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -6,7 +6,7 @@ import flixel.FlxSubState;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
-class OptionsSubState extends FlxSubState
+class ControlsSubState extends FlxSubState
 {
 	var selectText:FlxText;
 	var curTextofSelect:String = "";
@@ -18,14 +18,7 @@ class OptionsSubState extends FlxSubState
 	public function new()
 	{
 		super();
-		var titleText:FlxText = new FlxText(2, 2, 0, "OPTIONS", 8);
-		titleText.scrollFactor.set();
-		add(titleText);
-		var bg:FlxSprite = new FlxSprite();
-		bg.makeGraphic(FlxG.width * 100, FlxG.height * 100, FlxColor.BLACK);
-		bg.alpha = 0.6;
-		bg.scrollFactor.set();
-		add(bg);
+		OptionsSubState.titleText.text = "OPTIONS - CONTROLS";
 		selectText = new FlxText(15, FlxG.height - 40, 0, curTextofSelect, 18, false);
 		selectText.setFormat(null, 18, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
 		add(selectText);
@@ -74,6 +67,8 @@ class OptionsSubState extends FlxSubState
 		{
 			FlxG.save.flush();
 			close();
+			curTextofSelect = "";
+			openSubState(new OptionsSubState());
 		}
 
 		if (FlxG.keys.justPressed.ENTER)

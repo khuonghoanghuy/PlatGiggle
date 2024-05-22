@@ -60,7 +60,7 @@ class MenuState extends FlxState
 					FlxG.switchState(new SelectLevelState());
 				case 1:
 					trace("open config level");
-					openSubState(new OptionsSubState());
+					openSubState(new options.OptionsSubState());
 				case 2:
 					trace("exit game");
 					Sys.exit(0);

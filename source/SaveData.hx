@@ -25,6 +25,10 @@ class SaveData
 		{
 			FlxG.save.data.rightKey = "RIGHT";
 		}
+		if (FlxG.save.data.lowStage == null)
+		{
+			FlxG.save.data.lowStage = false;
+		}
 		FlxG.save.bind("platGiggleData", "huy1234th");
 		FlxG.save.flush();
 	}
