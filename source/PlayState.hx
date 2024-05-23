@@ -40,7 +40,7 @@ class PlayState extends FlxState
 
 	override function create()
 	{
-		FlxG.cameras.bgColor = Std.parseInt(loadstringFile("assets/id/lev" + levelID + "/colorbg.txt"));
+		// FlxG.cameras.bgColor = Std.parseInt(loadstringFile("assets/id/lev" + levelID + "/colorbg.txt"));
 		// FlxG.cameras.bgColor = FlxColor.GRAY;
 		
 		super.create();
@@ -66,6 +66,13 @@ class PlayState extends FlxState
 		// FlxG.camera.zoom = 1.5;
 		add(player);
 
+		exit = new FlxSprite(35 * 8 + 1, 25 * 8);
+		exit.makeGraphic(14, 16, FlxColor.GREEN);
+		trace(exit.x);
+		trace(exit.y);
+		exit.exists = false;
+		add(exit);
+
 		coins = new FlxGroup();
 		var interp = new Interp();
 		interp.variables.set("createCoin", createCoin);
@@ -81,11 +88,6 @@ class PlayState extends FlxState
 		var parser = new Parser();
 		interp.execute(parser.parseString(loadstringFile("assets/id/lev" + levelID + "/data.txt")));
 		add(coins);
-
-		exit = new FlxSprite(35 * 8 + 1, 25 * 8);
-		exit.makeGraphic(14, 16, FlxColor.GREEN);
-		exit.exists = false;
-		add(exit);
 
 		scoreTxt = new FlxText(2, 2, 80, "SCORE: 0\nLEVEL: " + levelID);
 		scoreTxt.setFormat(null, 8, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
@@ -127,6 +129,16 @@ class PlayState extends FlxState
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
 			openSubState(new PauseSubState());
+		}
+
+		if (FlxG.keys.justPressed.F6)
+		{
+			exit.exists = !exit.exists;
+		}
+
+		if (FlxG.keys.justPressed.F5)
+		{
+			FlxG.resetState();
 		}
 
 		super.update(elapsed);

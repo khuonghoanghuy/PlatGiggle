@@ -1,1 +1,2 @@
-createCoin(3, 20);
+createCoin(10, 28);
+setExitPOS(32,22);

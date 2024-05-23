@@ -3,10 +3,13 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "lev1/project.tmx",
+    "activeFile": "lev2/project.tmx",
     "expandedProjectPaths": [
-        "lev1"
+        ".",
+        "lev1",
+        "lev2"
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "graphic.tsx": {
             "scaleInDock": 23,
@@ -24,12 +27,20 @@
             "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 140.33333333333334,
-                "y": 78.33333333333331
+                "x": 139,
+                "y": 76.99999999999997
+            }
+        },
+        "lev2/project.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 235.3333333333333,
+                "y": 147.33333333333326
             }
         }
     },
-    "last.exportedFilePath": "C:/Users/HoangHuy/Desktop/Haxe Project/PlatGiggle/assets/id/lev1",
+    "last.exportedFilePath": "C:/Users/HoangHuy/Desktop/Haxe Project/PlatGiggle/assets/id/lev2",
     "last.imagePath": "C:/Users/HoangHuy/Desktop/Haxe Project/PlatGiggle/assets/id/graphic",
     "map.height": 30,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
@@ -38,11 +49,12 @@
     "map.tileWidth": 8,
     "map.width": 40,
     "openFiles": [
-        "lev1/project.tmx"
+        "lev2/project.tmx"
     ],
     "project": "platProject.tiled-project",
     "recentFiles": [
         "lev1/project.tmx",
+        "lev2/project.tmx",
         "graphic.tsx",
         "lev1/data.tmx"
     ],

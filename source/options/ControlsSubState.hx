@@ -18,7 +18,12 @@ class ControlsSubState extends FlxSubState
 	public function new()
 	{
 		super();
-		OptionsSubState.titleText.text = "OPTIONS - CONTROLS";
+		OptionsState.titleText.text = "OPTIONS - CONTROLS";
+		var bg:FlxSprite = new FlxSprite();
+		bg.makeGraphic(FlxG.width * 100, FlxG.height * 100, FlxColor.BLACK);
+		bg.alpha = 0.6;
+		bg.scrollFactor.set();
+		add(bg);
 		selectText = new FlxText(15, FlxG.height - 40, 0, curTextofSelect, 18, false);
 		selectText.setFormat(null, 18, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
 		add(selectText);
@@ -68,7 +73,6 @@ class ControlsSubState extends FlxSubState
 			FlxG.save.flush();
 			close();
 			curTextofSelect = "";
-			openSubState(new OptionsSubState());
 		}
 
 		if (FlxG.keys.justPressed.ENTER)

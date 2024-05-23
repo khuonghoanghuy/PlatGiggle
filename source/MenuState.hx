@@ -6,6 +6,8 @@ import flixel.FlxState;
 import flixel.FlxSubState;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import lime.app.Application;
+import options.OptionsState;
 
 class MenuState extends FlxState
 {
@@ -27,6 +29,10 @@ class MenuState extends FlxState
 		}
 
 		FlxG.cameras.bgColor = 0xffaaaaaa;
+
+		var versionTxt = new FlxText(2, 2, 80, "Version: " + Application.current.meta.get("version"));
+		versionTxt.setFormat(null, 8, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
+		add(versionTxt);
 
 		selectText = new FlxText(15, FlxG.height - 40, 0, curTextofSelect, 18, false);
 		selectText.setFormat(null, 18, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
@@ -76,7 +82,7 @@ class MenuState extends FlxState
 					FlxG.switchState(new SelectLevelState());
 				case 1:
 					trace("open config level");
-					openSubState(new options.OptionsSubState());
+					FlxG.switchState(new OptionsState());
 				case 2:
 					trace("exit game");
 					FlxG.save.flush();

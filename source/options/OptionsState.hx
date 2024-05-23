@@ -2,11 +2,12 @@ package options;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.FlxState;
 import flixel.FlxSubState;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
-class OptionsSubState extends FlxSubState
+class OptionsState extends FlxState
 {
 	var selectText:FlxText;
 	var curTextofSelect:String = "";
@@ -19,11 +20,7 @@ class OptionsSubState extends FlxSubState
 	public function new()
 	{
 		super();
-		var bg:FlxSprite = new FlxSprite();
-		bg.makeGraphic(FlxG.width * 100, FlxG.height * 100, FlxColor.BLACK);
-		bg.alpha = 0.6;
-		bg.scrollFactor.set();
-		add(bg);
+
 		titleText = new FlxText(2, 2, 0, "OPTIONS - MENU", 8);
 		titleText.scrollFactor.set();
 		add(titleText);
@@ -62,7 +59,7 @@ class OptionsSubState extends FlxSubState
 		if (FlxG.keys.justReleased.ESCAPE)
 		{
 			FlxG.save.flush();
-			close();
+			FlxG.switchState(new MenuState());
 		}
 
 		if (FlxG.keys.justPressed.ENTER)
