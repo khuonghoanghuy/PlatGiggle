@@ -1,0 +1,7 @@
+if (levelID == 1) {
+	setPlayerPOS(10, 225);
+}
+
+if (levelID == 1) {
+	setExitPOS(39, 33);
+}
